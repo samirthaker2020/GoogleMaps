@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.abhiandroid.GoogleMaps.googlemaps.R;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
@@ -44,6 +45,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
+    double d;
+    double tot;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
@@ -108,6 +111,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             .width(8)
                             .color(Color.RED));
                  System.out.println("point"+c+":"+   CalculationByDistance(points.get(c-1), points.get(c-2)));
+                   d=CalculationByDistance(points.get(c-1), points.get(c-2));
+                    Toast.makeText(MapsActivity.this,"distance::"+String.valueOf(c-1)+"::"+String.valueOf(d) , Toast.LENGTH_LONG).show();
+                    tot=tot+d;
 
 
                 }
@@ -121,7 +127,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     polygonOptions.fillColor(ContextCompat.getColor(MapsActivity.this,android.R.color.holo_blue_bright));
                     mMap.addPolygon(polygonOptions);
                     System.out.println( "point"+c+":"+  CalculationByDistance(points.get(0), points.get(2)));
+
+                    d=CalculationByDistance(points.get(0), points.get(2));
+                    Toast.makeText(MapsActivity.this,"third distance::"+String.valueOf(d) , Toast.LENGTH_LONG).show();
+                    tot=tot+d;
+                    Toast.makeText(MapsActivity.this,"Total::"+String.valueOf(tot) , Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+            @Override
+            public void onPolylineClick(Polyline polyline) {
+                
+
             }
         });
     }
